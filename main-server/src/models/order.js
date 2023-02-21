@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const Order = new mongoose.Schema({
-    vendorId: {
+    vendorIds: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Vendor',
         required: true,
-    },
+    }],
     billerCode: {
         type: Number,
         required: true,
@@ -40,6 +40,14 @@ const Order = new mongoose.Schema({
     live: {
         type: Boolean,
         required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    rollNo:{
+        type: String,
+        required: false,
     }
 });
 

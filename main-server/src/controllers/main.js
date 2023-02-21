@@ -210,40 +210,52 @@ const vendorLogin = async (req, res) => {
 };
 
 const newOrder = async (req, res) => {
-  const { items, totalPrice, billerCode, usableId } = req.body;
-  const vendor = await Vendor.findById(req.params.vendorId);
-  if (!vendor) {
-    res.status(404).json({ error: "Vendor not found" });
-  } else {
-    const order = new Order({
-      vendorId: vendor._id,
-      billerCode,
-      items,
-      totalPrice,
-      timeStamp: Date.now(),
-      live: true,
-      usableId,
-    });
+  const { items, totalPrice, billerCode, usableId, name, rollNo} = req.body;
+  const vendorIds = [...new Set(items.map((item) => item.vendorId))];
+  const order = new Order({
+    vendorIds,
+    billerCode,
+    items,
+    totalPrice,
+    timeStamp: Date.now(),
+    live: true,
+    usableId,
+    name,
+    rollNo,
+  });
+
+  try {
+    // Save the new order to the database
     await order.save();
     res.json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
+
 const getLiveOrders = async (req, res) => {
+  const { vendorIds } = req.params;
+  const vendorIdArr = vendorIds.split(",");
   const orders = await Order.find({
-    vendorId: req.params.vendorId,
+    vendorIds: { $in: vendorIdArr },
     live: true,
   });
   res.json(orders);
 };
 
+
 const getCompleteOrders = async (req, res) => {
+  const { vendorIds } = req.params;
+  const vendorIdArr = vendorIds.split(",");
   const orders = await Order.find({
-    vendorId: req.params.vendorId,
+    vendorIds: { $in: vendorIdArr },
     live: false,
   });
   res.json(orders);
 };
+
 
 const getItem = async (req, res) => {
   const item = await Item.findOne({ _id: req.params.itemId });
