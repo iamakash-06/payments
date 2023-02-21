@@ -10,6 +10,10 @@ const Order = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    usableId:{
+        type: String,
+        required: true,
+    },
     items : [{
         itemId: {
             type: mongoose.Schema.Types.ObjectId,

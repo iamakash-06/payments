@@ -210,7 +210,7 @@ const vendorLogin = async (req, res) => {
 };
 
 const newOrder = async (req, res) => {
-  const { items, totalPrice, billerCode } = req.body;
+  const { items, totalPrice, billerCode, usableId } = req.body;
   const vendor = await Vendor.findById(req.params.vendorId);
   if (!vendor) {
     res.status(404).json({ error: "Vendor not found" });
@@ -222,6 +222,7 @@ const newOrder = async (req, res) => {
       totalPrice,
       timeStamp: Date.now(),
       live: true,
+      usableId,
     });
     await order.save();
     res.json(order);
