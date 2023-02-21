@@ -212,6 +212,7 @@ const vendorLogin = async (req, res) => {
 const newOrder = async (req, res) => {
   const { items, totalPrice, billerCode, usableId, name, rollNo} = req.body;
   const vendorIds = [...new Set(items.map((item) => item.vendorId))];
+  console.log(vendorIds)
   const order = new Order({
     vendorIds,
     billerCode,
@@ -236,10 +237,10 @@ const newOrder = async (req, res) => {
 
 
 const getLiveOrders = async (req, res) => {
-  const { vendorIds } = req.params;
-  const vendorIdArr = vendorIds.split(",");
+  const vendorId = req.params.vendorId;
+
   const orders = await Order.find({
-    vendorIds: { $in: vendorIdArr },
+    vendorIds: { $in: vendorId },
     live: true,
   });
   res.json(orders);
@@ -247,10 +248,9 @@ const getLiveOrders = async (req, res) => {
 
 
 const getCompleteOrders = async (req, res) => {
-  const { vendorIds } = req.params;
-  const vendorIdArr = vendorIds.split(",");
+  const vendorId = req.params.vendorId;
   const orders = await Order.find({
-    vendorIds: { $in: vendorIdArr },
+    vendorIds: { $in: vendorId },
     live: false,
   });
   res.json(orders);
@@ -332,6 +332,11 @@ const orderDisplay = async (req, res) => {
   });
 };
 
+const allItems = async (req, res) => {
+  const items = await Item.find({});
+  res.json(items);
+};
+
 
 module.exports = {
   addVendor,
@@ -360,4 +365,5 @@ module.exports = {
   editItem,
   deleteItem,
   orderDisplay,
+  allItems,
 };
