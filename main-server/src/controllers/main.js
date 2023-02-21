@@ -210,6 +210,7 @@ const vendorLogin = async (req, res) => {
 };
 
 const newOrder = async (req, res) => {
+  console.log(req.body)
   const { items, totalPrice, billerCode, usableId, name, rollNo} = req.body;
   const vendorIds = [...new Set(items.map((item) => item.vendorId))];
   console.log(vendorIds)
