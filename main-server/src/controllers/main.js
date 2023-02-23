@@ -338,7 +338,7 @@ const allItems = async (req, res) => {
 };
 
 const cancelOrder = async (req, res) => {
-  const order = await Order.findByIdAndDelete(req.params.orderId);
+  const order = await Order.findOneAndDelete({usableId: req.params.orderId});
   res.json(order);
 };
 
