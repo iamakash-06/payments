@@ -32,7 +32,7 @@ const {
   deleteItem,
   orderDisplay,
   allItems,
-
+  cancelOrder
 } = require("../controllers/main.js");
 
 
@@ -64,4 +64,5 @@ router.post("/api/item/:vendorId/new", addNewItems);
 router.put("/api/item/:vendorId/:itemId", editItem);
 router.delete("/api/item/delete/:vendorId/:itemId", deleteItem);
 router.get("/api/order/display", orderDisplay);
+router.get("/api/order/:orderId/cancel", cancelOrder);
 module.exports = router;

@@ -337,6 +337,11 @@ const allItems = async (req, res) => {
   res.json(items);
 };
 
+const cancelOrder = async (req, res) => {
+  const order = await Order.findByIdAndDelete(req.params.orderId);
+  res.json(order);
+};
+
 module.exports = {
   addVendor,
   addItems,
@@ -365,4 +370,5 @@ module.exports = {
   deleteItem,
   orderDisplay,
   allItems,
+  cancelOrder
 };
