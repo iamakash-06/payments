@@ -3,6 +3,7 @@ const Item = require("../models/items.js");
 const Biller = require("../models/biller.js");
 const Admin = require("../models/admin.js");
 const Order = require("../models/order.js");
+const path = require("path");
 
 const addVendor = async (req, res) => {
   const { username, password } = req.body;
@@ -211,7 +212,7 @@ const vendorLogin = async (req, res) => {
 
 const newOrder = async (req, res) => {
   console.log(req.body)
-  const { items, totalPrice, billerCode, usableId, name, rollNo} = req.body;
+  const { items, totalPrice, billerCode, usableId} = req.body;
   const vendorIds = [...new Set(items.map((item) => item.vendorId))];
   console.log(vendorIds)
   const order = new Order({
@@ -222,8 +223,6 @@ const newOrder = async (req, res) => {
     timeStamp: Date.now(),
     live: true,
     usableId,
-    name,
-    rollNo,
   });
 
   try {
@@ -337,7 +336,6 @@ const allItems = async (req, res) => {
   const items = await Item.find({});
   res.json(items);
 };
-
 
 module.exports = {
   addVendor,

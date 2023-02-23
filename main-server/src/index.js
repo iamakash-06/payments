@@ -1,7 +1,9 @@
 require("dotenv").config();
-const app = require("express")();
+const express = require("express");
+const app = express();
 const http = require('http')
 const server = http.createServer(app)
+const path = require("path");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -25,6 +27,11 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :data")
 );
 app.use(router);
+// app.use(express.static("public"));
+// app.use(express.static("admin"));
+// app.use(express.static("vendor"));
+// app.use(express.static("vendor"));
+
 //error handler
 const errorHandler = (error, request, response, next) => {
   logger.error(error.message);

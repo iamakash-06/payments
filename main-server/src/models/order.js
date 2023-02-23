@@ -41,14 +41,6 @@ const Order = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    name: {
-        type: String,
-        required: true,
-    },
-    rollNo:{
-        type: String,
-        required: false,
-    }
 });
 
 module.exports = mongoose.model('Order', Order);

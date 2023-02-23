@@ -31,8 +31,10 @@ const {
   editItem,
   deleteItem,
   orderDisplay,
-  allItems
+  allItems,
+
 } = require("../controllers/main.js");
+
 
 //routes
 router.get("/api/vendor/all", allVendors);
